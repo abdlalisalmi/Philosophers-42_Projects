@@ -6,20 +6,22 @@
 #    By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/26 11:36:20 by aes-salm          #+#    #+#              #
-#    Updated: 2021/06/26 11:58:58 by aes-salm         ###   ########.fr        #
+#    Updated: 2021/06/29 17:15:25 by aes-salm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME 	= philo.a
 CC		= gcc
 FLAGS	= -Wall -Wextra -Werror
-SRCS	= functions/test.c
+SRCS	= 	functions/exit_program.c\
+			functions/ft_atoi.c\
+			functions/ft_strlen.c\
 
 
 $(NAME) :	$(SRCS)
 			@ $(CC) $(FLAGS) -c $(SRCS)
 			@ ar rc $(NAME) *.o
-			@ $(CC) $(FLAGS) main.c $(NAME) -o philo -g3 -fsanitize=address
+			@ $(CC) $(FLAGS) main.c $(NAME) -o philo
 
 all		:	$(NAME)
 
@@ -30,3 +32,6 @@ fclean	:	clean
 			@ rm -rf $(NAME) philo
 			
 re		:	fclean all
+
+test	:	re
+			@ rm -rf philo.a *.o
