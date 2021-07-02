@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:36:17 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/06/29 18:53:35 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/02 20:51:32 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@
 # include <pthread.h>
 # include <semaphore.h>
 
+# define EATING 1
+# define THINKING 2
+# define SLEEPING 3
+
 
 typedef struct s_args
 {
@@ -29,6 +33,9 @@ typedef struct s_args
 	int			t_eat;
 	int			t_sleep;
 	int			n_t_eat;
+
+	int 		*chopsticks;
+	
 }				t_args;
 t_args			g_args;
 
