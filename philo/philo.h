@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:36:17 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/02 20:51:32 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/03 13:41:35 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,14 @@
 # define THINKING 2
 # define SLEEPING 3
 
+# define FREEFORK 0
+# define BUSYFORK 1
+
+typedef struct s_philo
+{
+	int				id;
+	pthread_mutex_t	lock;
+}				t_philo;
 
 typedef struct s_args
 {
@@ -34,14 +42,22 @@ typedef struct s_args
 	int			t_sleep;
 	int			n_t_eat;
 
-	int 		*chopsticks;
+	t_philo		*philosophers;
+	int 		*forks;
+	pthread_mutex_t lock;
 	
 }				t_args;
 t_args			g_args;
 
+long	get_timestamp(void);
 void	exit_program(char *msg, int code);
 int		ft_atoi(const char *str);
 int		ft_strlen(char *str);
+
+int		take_forks(int philo_number);
+void    start_eating(int philo_number, int right, int left);
+void    start_sleeping(int philo_number);
+void    start_thinking(int philo_number);
 
 #endif
  

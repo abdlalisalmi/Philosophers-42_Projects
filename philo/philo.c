@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:44:44 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/02 20:58:47 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/03 13:45:55 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,45 +35,18 @@ int	get_args(int len, char **args)
 	return (0);
 }
 
-long	get_timestamp(void)
-{
-	long			milliseconds;
-	struct timeval	time;
 
-	gettimeofday(&time, NULL); // get current time
-	milliseconds = time.tv_sec  * 1000LL + time.tv_usec / 1000; // calculate milliseconds
-	return (milliseconds);
-}
-
-void	take_fork()
+void *philosopher(void *id)
 {
-	
-}
+	int philo_number = *((int*)id);
 
-void *philospher(void *id)
-{
-	int philosopher_number = *((int*)id);
-	int left;
-	int right;
     while (1)
 	{
-		// check n pick right Chopstick
-		right = (philosopher_number + 1) % g_args.n_philo;
-		if(g_args.chopsticks[right] == 1)
+        if (!take_forks(philo_number))
 			continue;
-
-		// Check n pick left chopstick
-		left = philosopher_number;
-		if(g_args.chopsticks[left] == 1)
-			continue;            
-            
-		// int* i = num;
-        printf("%ld Philosopher %d has taken %d and %d fork\n", get_timestamp(), philosopher_number, right, left);
-
-        sleep(5);
-		// EXIT Section : Free the Chopsticks
-		g_args.chopsticks[philosopher_number] = 0;
-		g_args.chopsticks[(philosopher_number+1) % g_args.n_philo] = 0;
+		
+		start_sleeping(philo_number);
+		start_thinking(philo_number);
 
         // printf("%ld X %d has taken a fork\n", get_timestamp(), philosopher_number);
         // printf("%ld X %d is eating\n", get_timestamp(), philosopher_number);
@@ -86,45 +59,47 @@ void *philospher(void *id)
 
 int	main(int len, char **args)
 {
+	pthread_t *tid;
+	int i;
+
+
 	if (get_args(len, args))
 		usage();
-		
-	// printf("number_of_philosophers: %d\n", g_args.n_philo);
-	// printf("time_to_die: %d\n", g_args.t_die);
-	// printf("time_to_eat: %d\n", g_args.t_eat);
-	// printf("time_to_sleep: %d\n", g_args.t_sleep);
-	// printf("number_of_times_each_philosopher_must_eat: %d\n", g_args.n_t_eat);
 
-	// printf("milliseconds: %ld\n", current_timestamp());
 
-	pthread_t tid[g_args.n_philo];
-	int philosophers[g_args.n_philo];
-	int i;
+	tid = malloc(sizeof(pthread_t) * g_args.n_philo);
+	g_args.philosophers = malloc(sizeof(t_philo) * g_args.n_philo);
+
+
+	 if (pthread_mutex_init(&g_args.lock, NULL) != 0)
+        exit_program("mutex init failed", EXIT_FAILURE);
 
 
 	// Setting the Philosopher Numbers
 	i = -1;
     while (++i < g_args.n_philo)
-        philosophers[i] = i;
+        g_args.philosophers[i].id = i;
 
 
-  // Setting the state of all Chopsticks as 0
-  	g_args.chopsticks = malloc(sizeof(int) * g_args.n_philo);
+  // Setting the state of all forks as 0
+  	g_args.forks = malloc(sizeof(int) * g_args.n_philo);
     i = -1;
     while (++i < g_args.n_philo)
-        g_args.chopsticks[i] = 0;
+        g_args.forks[i] = 0;
 
 
 	// create philosopher thread
 	i = -1;
     while (++i < g_args.n_philo)
-        pthread_create(&tid[i], NULL, philospher, (void*)&philosophers[i]);
+        pthread_create(&tid[i], NULL, philosopher, (void*)&g_args.philosophers[i].id);
 
 
 	// Wait equivalent
 	i = -1;
     while (++i < g_args.n_philo)
         pthread_join(tid[i], NULL);
+
+	pthread_mutex_destroy(&g_args.lock);
 
 	return (0);
 }

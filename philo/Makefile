@@ -6,7 +6,7 @@
 #    By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/26 11:36:20 by aes-salm          #+#    #+#              #
-#    Updated: 2021/06/30 09:43:00 by aes-salm         ###   ########.fr        #
+#    Updated: 2021/07/03 12:33:09 by aes-salm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,8 @@ FLAGS	= -Wall -Wextra -Werror
 SRCS	= 	functions/exit_program.c\
 			functions/ft_atoi.c\
 			functions/ft_strlen.c\
+			functions/get_timestamp.c\
+			functions/routine.c\
 
 
 $(NAME) :	$(SRCS)
