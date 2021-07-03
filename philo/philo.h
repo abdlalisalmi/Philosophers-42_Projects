@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:36:17 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/03 15:52:26 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/03 18:59:40 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ typedef struct s_philo
 {
 	int				id;
 	int				total_eat;
-	int				last_eat;
+	uint64_t		last_eat;
 	pthread_mutex_t	lock;
-}				t_philo;
+}					t_philo;
 
 typedef struct s_args
 {

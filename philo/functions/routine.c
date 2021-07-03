@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 12:32:07 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/03 16:18:36 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/03 19:24:51 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void    start_eating(uint64_t time, int philo_number, int right, int left)
     output(time, philo_number, "is eating");
     g_args.philosophers[philo_number].total_eat += 1;
     usleep(g_args.t_eat * 1000);
-    g_args.philosophers[philo_number].last_eat = get_timestamp();
+    g_args.philosophers[philo_number].last_eat = get_timestamp() - g_args.time;
     g_args.forks[right] = FREEFORK;
     g_args.forks[left] = FREEFORK;
 }

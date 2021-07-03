@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:44:44 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/03 16:18:39 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/03 19:12:49 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ void	supervisor(void)
     while (++i < g_args.n_philo)
 	{
 		time = get_timestamp() - g_args.time;
-		//printf("time : %llu\n", time - g_args.philosophers[i].last_eat);
 		if ((time - g_args.philosophers[i].last_eat) > g_args.t_die)
 		{
 			output(get_timestamp(), i, "died");
+			printf("philo = %d time = %lld last eat = %lld\n", i+1, g_args.t_die, g_args.philosophers[i].last_eat);
 			exit(EXIT_FAILURE);
 		}
 	}
@@ -64,8 +64,6 @@ void *philosopher(void *id)
 			continue;
 		start_sleeping(philo_number);
 		start_thinking(philo_number);
-
-        // printf("%ld X %d died\n", get_timestamp(), philosopher_number);
     }
 }
 
