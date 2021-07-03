@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:44:44 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/03 13:45:55 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/03 16:04:15 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ int	get_args(int len, char **args)
 	if (len != 5 && len != 6)
 		return (1);
 	g_args.n_philo = ft_atoi(args[1]);
-	g_args.t_die = ft_atoi(args[2]) * 1000;
-	g_args.t_eat = ft_atoi(args[3]) * 1000;
-	g_args.t_sleep = ft_atoi(args[4]) * 1000;
+	g_args.t_die = ft_atoi(args[2]);
+	g_args.t_eat = ft_atoi(args[3]);
+	g_args.t_sleep = ft_atoi(args[4]);
 	if (len == 6)
 		g_args.n_t_eat = ft_atoi(args[5]);
 	else
@@ -35,6 +35,24 @@ int	get_args(int len, char **args)
 	return (0);
 }
 
+void	supervisor(void)
+{
+	int	i;
+	uint64_t time;
+
+	i = -1;
+    while (++i < g_args.n_philo)
+	{
+		time = get_timestamp() - g_args.time;
+		//printf("time : %llu\n", get_timestamp() - g_args.philosophers[i].last_eat);
+		if ((time - g_args.philosophers[i].last_eat) > g_args.t_die)
+		{
+
+			output(get_timestamp(), i, "died");
+			exit(EXIT_FAILURE);
+		}
+	}
+}
 
 void *philosopher(void *id)
 {
@@ -42,18 +60,13 @@ void *philosopher(void *id)
 
     while (1)
 	{
+		supervisor();
         if (!take_forks(philo_number))
 			continue;
-		
 		start_sleeping(philo_number);
 		start_thinking(philo_number);
 
-        // printf("%ld X %d has taken a fork\n", get_timestamp(), philosopher_number);
-        // printf("%ld X %d is eating\n", get_timestamp(), philosopher_number);
-        // printf("%ld X %d is sleeping\n", get_timestamp(), philosopher_number);
-        // printf("%ld X %d is thinking\n", get_timestamp(), philosopher_number);
         // printf("%ld X %d died\n", get_timestamp(), philosopher_number);
-        // printf("Philosopher %d put fork\n", (int)num);
     }
 }
 
@@ -70,6 +83,7 @@ int	main(int len, char **args)
 	tid = malloc(sizeof(pthread_t) * g_args.n_philo);
 	g_args.philosophers = malloc(sizeof(t_philo) * g_args.n_philo);
 
+	g_args.time = get_timestamp();
 
 	 if (pthread_mutex_init(&g_args.lock, NULL) != 0)
         exit_program("mutex init failed", EXIT_FAILURE);

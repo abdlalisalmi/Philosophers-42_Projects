@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:36:17 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/03 13:41:35 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/03 15:52:26 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,31 +31,36 @@
 typedef struct s_philo
 {
 	int				id;
+	int				total_eat;
+	int				last_eat;
 	pthread_mutex_t	lock;
 }				t_philo;
 
 typedef struct s_args
 {
 	int			n_philo;
-	int			t_die;
-	int			t_eat;
-	int			t_sleep;
+	uint64_t	t_die;
+	uint64_t	t_eat;
+	uint64_t	t_sleep;
 	int			n_t_eat;
+	uint64_t	time;
 
 	t_philo		*philosophers;
 	int 		*forks;
 	pthread_mutex_t lock;
+	pthread_mutex_t output_lock;
 	
 }				t_args;
 t_args			g_args;
 
-long	get_timestamp(void);
+uint64_t	get_timestamp(void);
 void	exit_program(char *msg, int code);
 int		ft_atoi(const char *str);
 int		ft_strlen(char *str);
+void    output(long time, int philo_id, char *msg);
 
 int		take_forks(int philo_number);
-void    start_eating(int philo_number, int right, int left);
+void    start_eating(uint64_t time, int philo_number, int right, int left);
 void    start_sleeping(int philo_number);
 void    start_thinking(int philo_number);
 
