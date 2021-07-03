@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 12:32:07 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/03 16:07:38 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/03 16:18:36 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,7 @@ int	take_forks(int philo_number)
 	pthread_mutex_lock(&g_args.lock);
 	right = (philo_number + 1) % g_args.n_philo;
 	left = philo_number;
-    if (g_args.n_philo <= 1)
-        return (0);
-	if(g_args.forks[right] == FREEFORK && g_args.forks[left] == FREEFORK)
+	if(g_args.forks[right] == FREEFORK && g_args.forks[left] == FREEFORK && !(g_args.n_philo <= 1))
     {
         time = get_timestamp();
 		output(time, philo_number, "has taken a fork");
