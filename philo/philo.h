@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:36:17 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/03 18:59:40 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/05 16:03:42 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,44 +25,40 @@
 # define THINKING 2
 # define SLEEPING 3
 
-# define FREEFORK 0
-# define BUSYFORK 1
-
 typedef struct s_philo
 {
-	int				id;
 	int				total_eat;
 	uint64_t		last_eat;
+	int				status;
 	pthread_mutex_t	lock;
 }					t_philo;
 
 typedef struct s_args
 {
-	int			n_philo;
-	uint64_t	t_die;
-	uint64_t	t_eat;
-	uint64_t	t_sleep;
-	int			n_t_eat;
-	uint64_t	time;
+	int					n_philo;
+	int					philo_number;
+	uint64_t			t_die;
+	uint64_t			t_eat;
+	uint64_t			t_sleep;
+	int					n_t_eat;
+	uint64_t			time;
 
-	t_philo		*philosophers;
-	int 		*forks;
-	pthread_mutex_t lock;
-	pthread_mutex_t output_lock;
+	t_philo				*philosophers;
+	pthread_mutex_t 	*forks;
+	pthread_mutex_t 	lock;
 	
-}				t_args;
-t_args			g_args;
+}						t_args;
 
 uint64_t	get_timestamp(void);
-void	exit_program(char *msg, int code);
-int		ft_atoi(const char *str);
-int		ft_strlen(char *str);
-void    output(long time, int philo_id, char *msg);
+void		exit_program(char *msg, int code);
+void		output(long time, t_args *args, char *msg);
+int			ft_atoi(const char *str);
+int			ft_strlen(char *str);
 
-int		take_forks(int philo_number);
-void    start_eating(uint64_t time, int philo_number, int right, int left);
-void    start_sleeping(int philo_number);
-void    start_thinking(int philo_number);
+void		take_forks(t_args *args);
+void		start_eating(t_args *args);
+void		start_sleeping(t_args *args);
+void		start_thinking(t_args *args);
 
 #endif
  
