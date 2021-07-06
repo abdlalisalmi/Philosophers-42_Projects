@@ -6,15 +6,20 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 12:32:07 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/06 10:18:42 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/06 13:04:32 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philo.h"
 
-void    output(long time, t_philo *philo, char *msg)
+void    output(long time, t_philo *philo, char *msg, char *color)
 {
-    printf("%llu Philosopher %d %s\n", time - philo->time, philo->id + 1, msg);
+    int id;
+    uint64_t    tm;
+    
+    id = philo->id + 1;
+    tm = time - philo->time;
+    printf("%s%llu Philosopher %d %s\n",color, tm, id, msg);
 }
 
 void	take_forks(t_philo *philo)
@@ -32,36 +37,37 @@ void	take_forks(t_philo *philo)
     pthread_mutex_lock(&philo->forks->forks[right]);
     pthread_mutex_lock(&philo->forks->forks[left]);
     time = get_timestamp();
-    output(time, philo, "has taken a fork");
+    output(time, philo, "has taken a fork", GREEN);
     pthread_mutex_unlock(&lock);
+    pthread_mutex_destroy(&lock);
 }
 
-//void    start_eating(t_philo *philo)
-//{
-//    int right;
-//    int left;
+void    start_eating(t_philo *philo)
+{
+    int right;
+    int left;
 
-//    right = (philo->id + 1) % philo->n_philo;
-//	left = philo->id;
-//    philo->philosophers[philo->id].status = EATING;
-//    output(get_timestamp(), philo, "is eating");
-//    philo->philosophers[philo->id].total_eat += 1;
-//    usleep(philo->t_eat * 1000);
-//    philo->philosophers[philo->id].last_eat = get_timestamp() - philo->time;
+    right = (philo->id + 1) % philo->n_philo;
+	left = philo->id;
+    philo->status = EATING;
+    output(get_timestamp(), philo, "is eating", GREEN);
+    philo->total_eat += 1;
+    usleep(philo->t_eat * 1000);
+    philo->last_eat = get_timestamp() - philo->time;
 
-//    pthread_mutex_unlock(&philo->forks[right]);
-//    pthread_mutex_unlock(&philo->forks[left]);
-//}
+    pthread_mutex_unlock(&philo->forks->forks[right]);
+    pthread_mutex_unlock(&philo->forks->forks[left]);
+}
 
-//void    start_sleeping(t_philo *philo)
-//{
-//    philo->philosophers[philo->id].status = SLEEPING;
-//    output(get_timestamp(), philo, "is sleeping");
-//    usleep(philo->t_sleep * 1000);
-//}
+void    start_sleeping(t_philo *philo)
+{
+    philo->status = SLEEPING;
+    output(get_timestamp(), philo, "is sleeping", YELLOW);
+    usleep(philo->t_sleep * 1000);
+}
 
-//void    start_thinking(t_philo *philo)
-//{
-//    philo->philosophers[philo->id].status = THINKING;
-//    output(get_timestamp(), philo, "is thinking");
-//}
+void    start_thinking(t_philo *philo)
+{
+    philo->status = THINKING;
+    output(get_timestamp(), philo, "is thinking", WHITE);
+}

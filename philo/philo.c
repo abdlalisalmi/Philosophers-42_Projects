@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:44:44 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/06 10:15:23 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/06 13:01:02 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ void *philosopher(void *parm)
      while (1)
 	 {
 	 	take_forks(philo);
-	 	//start_eating(args);
-	 	//start_sleeping(args);
-	 	//start_thinking(args);
+	 	start_eating(philo);
+	 	start_sleeping(philo);
+	 	start_thinking(philo);
 	 }
 	return (NULL);
 }
@@ -64,8 +64,8 @@ int	main(int len, char **argv)
 	t_philo		*philo;
 	t_forks		forks;
 	pthread_t	*tid;
-	// pthread_t	stid;
-	 int 		i;
+	pthread_t	stid;
+	int 		i;
 
 
 	philo = malloc(sizeof(t_philo) * 200);
@@ -90,27 +90,24 @@ int	main(int len, char **argv)
 		philo[i].id = i;
 	}
 
-    //i = -1;
-    //while (++i < philo[0].n_philo)
-    //    if (pthread_mutex_init(&philo[i].fork, NULL) != 0)
-	//		exit_program("mutex init failed", EXIT_FAILURE);
-
 	 i = -1;
      while (++i < philo[0].n_philo)
     	pthread_create(&tid[i], NULL, philosopher, (void *)&philo[i]);
-	// pthread_create(&stid, NULL, supervisor, (void *)philo);
+	 pthread_create(&stid, NULL, supervisor, (void *)philo);
 
 	 i = -1;
      while (++i < philo[0].n_philo)
          pthread_join(tid[i], NULL);
-	// pthread_join(stid, NULL);
+	 pthread_join(stid, NULL);
 
 	 i = -1;
 	 while (++i < philo[0].n_philo)
          pthread_mutex_destroy(&philo[0].forks->forks[i]);
-	// pthread_mutex_destroy(&philo->lock);
 
 
+	i = -1;
+    while (++i < philo[0].n_philo)
+        pthread_mutex_destroy(&forks.forks[i]);
 
 	return (0);
 }
