@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 12:32:07 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/06 13:04:32 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/06 15:39:51 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,16 @@ void	take_forks(t_philo *philo)
 	pthread_mutex_lock(&lock);
 	right = (philo->id + 1) % philo->n_philo;
 	left = philo->id;
-    pthread_mutex_lock(&philo->forks->forks[right]);
-    pthread_mutex_lock(&philo->forks->forks[left]);
+    if (philo->id % 2 == 0)
+    {
+        pthread_mutex_lock(&philo->forks->forks[right]);
+        pthread_mutex_lock(&philo->forks->forks[left]);
+    }
+    else
+    {
+        pthread_mutex_lock(&philo->forks->forks[left]);
+        pthread_mutex_lock(&philo->forks->forks[right]);
+    }
     time = get_timestamp();
     output(time, philo, "has taken a fork", GREEN);
     pthread_mutex_unlock(&lock);
