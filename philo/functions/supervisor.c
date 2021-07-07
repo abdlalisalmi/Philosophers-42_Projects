@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 19:42:15 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/06 14:38:04 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/07 09:49:25 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	*supervisor(void *parm)
 			time = get_timestamp() - philo[i].time;
 			if ((time - philo[i].last_eat) > philo[i].t_die && philo[i].status != EATING)
 			{
+				printf("time: %llu\n", time);
 				output(get_timestamp(), &philo[i], "died", RED);
 				printf("philo = %d, time = %lld, last eat = %lld\n", i+1, philo[i].t_die, philo[i].last_eat);
 				exit(EXIT_FAILURE);

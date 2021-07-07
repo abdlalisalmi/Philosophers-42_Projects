@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 12:32:07 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/06 15:39:51 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/07 08:55:09 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void    start_eating(t_philo *philo)
     philo->status = EATING;
     output(get_timestamp(), philo, "is eating", GREEN);
     philo->total_eat += 1;
-    usleep(philo->t_eat * 1000);
+    my_usleep(philo->t_eat);
     philo->last_eat = get_timestamp() - philo->time;
 
     pthread_mutex_unlock(&philo->forks->forks[right]);
@@ -71,7 +71,7 @@ void    start_sleeping(t_philo *philo)
 {
     philo->status = SLEEPING;
     output(get_timestamp(), philo, "is sleeping", YELLOW);
-    usleep(philo->t_sleep * 1000);
+    my_usleep(philo->t_sleep);
 }
 
 void    start_thinking(t_philo *philo)
