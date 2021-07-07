@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 19:42:15 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/07 13:15:46 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/07 13:30:33 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,14 @@ void	max_number_of_eat_check(t_philo *philo)
 				done = 0;
 		if (done)
 		{
-			printf("%sAll philosophers have eaten at least %d times each\n",RED, philo[0].n_t_eat);
+			printf ("%sAll philosophers have eaten at least", RED);
+			printf (" %d times each\n", philo[0].n_t_eat);
 			i = -1;
 			while (++i < philo[0].n_philo)
-				printf("philosopher %d total eat = %d\n", philo[i].id+1, philo[i].total_eat);
+			{
+				printf ("philosopher %d", philo[i].id + 1);
+				printf (" total eat = %d\n", philo[i].total_eat);
+			}
 			exit(EXIT_SUCCESS);
 			free_leaks(philo);
 		}
@@ -49,7 +53,8 @@ void	*supervisor(void *parm)
 		while (++i < philo[0].n_philo)
 		{
 			time = get_timestamp() - philo[i].time;
-			if ((time - philo[i].last_eat) > (int)philo[i].t_die && philo[i].status != EATING)
+			if ((time - philo[i].last_eat) > (int)philo[i].t_die
+				&& philo[i].status != EATING)
 			{
 				output(get_timestamp(), &philo[i], "died", RED);
 				exit(EXIT_FAILURE);
