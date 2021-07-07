@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:36:17 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/07 08:48:24 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/07 13:13:28 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,19 @@ typedef struct s_philo
 	int					id;
 	int					status;
 	int					total_eat;
-	uint64_t			last_eat;
+	int					last_eat;
 
 	t_forks				*forks;
 }						t_philo;
 
-
+int			get_args(int len, char **argv, t_philo *philo);
 uint64_t	get_timestamp(void);
 void		my_usleep(uint64_t time);
 void		exit_program(char *msg, int code);
 void		output(long time, t_philo *philo, char *msg, char *color);
 int			ft_atoi(const char *str);
 int			ft_strlen(char *str);
+void		free_leaks(t_philo *philo);
 
  void		*supervisor(void *parm);
  void		take_forks(t_philo *philo);
