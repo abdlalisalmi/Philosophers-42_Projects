@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:36:17 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/07 13:20:49 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/07 20:39:26 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define EATING 1
 # define THINKING 2
 # define SLEEPING 3
+# define DEAD 4
 
 typedef struct s_forks
 {

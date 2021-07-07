@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:44:44 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/07 13:09:09 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/07 20:40:22 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	*philosopher(void *parm)
 	t_philo		*philo;
 
 	philo = (t_philo *)parm;
-	while (1)
+	while (1 && philo->status != DEAD)
 	{
 		take_forks(philo);
 		start_eating(philo);
