@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 08:41:02 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/07 13:24:06 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/08 12:43:43 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	my_usleep(uint64_t time)
 	u_int64_t	current_time;
 	u_int64_t	looping_time;
 
-	looping_time = 40;
+	looping_time = (time / 5) + (time / 5);
 	microseconds = (time - looping_time) * 1000;
 	usleep(microseconds);
 	current_time = get_timestamp();

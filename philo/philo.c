@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:44:44 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/07 20:40:22 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/08 13:50:31 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	*philosopher(void *parm)
 	t_philo		*philo;
 
 	philo = (t_philo *)parm;
-	while (1 && philo->status != DEAD)
+	while (philo->status != DEAD)
 	{
 		take_forks(philo);
 		start_eating(philo);
@@ -46,6 +46,7 @@ void	launch_simulation(t_philo *philo)
 	while (++i < philo[0].n_philo)
 		pthread_create(&tid[i], NULL, philosopher, (void *)&philo[i]);
 	pthread_create(&stid, NULL, supervisor, (void *)philo);
+	
 	i = -1;
 	while (++i < philo[0].n_philo)
 		pthread_join(tid[i], NULL);
@@ -53,6 +54,7 @@ void	launch_simulation(t_philo *philo)
 	i = -1;
 	while (++i < philo[0].n_philo)
 		pthread_mutex_destroy(&philo[0].forks->forks[i]);
+	
 }
 
 int	main(int len, char **argv)
@@ -75,6 +77,7 @@ int	main(int len, char **argv)
 	i = -1;
 	while (++i < philo[0].n_philo)
 	{
+		pthread_mutex_init(&philo[i].lock, NULL);
 		philo[i].time = get_timestamp();
 		philo[i].id = i;
 	}

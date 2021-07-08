@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 19:42:15 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/07 20:40:06 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/08 13:51:50 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ void	*supervisor(void *parm)
 			{
 				philo[i].status = DEAD;
 				output(get_timestamp(), &philo[i], "died", RED);
-				exit(EXIT_FAILURE);
-				free_leaks(philo);
+				return (NULL);
+				//exit(EXIT_FAILURE);
 			}
 		}
 		max_number_of_eat_check(philo);
