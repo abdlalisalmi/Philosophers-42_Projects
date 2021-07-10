@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:44:44 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/08 13:50:31 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/10 20:38:36 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,52 +35,53 @@ void	*philosopher(void *parm)
 	return (NULL);
 }
 
-void	launch_simulation(t_philo *philo)
+void	launch_simulation(t_state state, t_philo *philo)
 {
 	int			i;
 	pthread_t	*tid;
 	pthread_t	stid;
 
-	tid = malloc(sizeof(pthread_t) * philo[0].n_philo);
+	tid = malloc(sizeof(pthread_t) * state.n_philo);
 	i = -1;
-	while (++i < philo[0].n_philo)
+	while (++i < state.n_philo)
 		pthread_create(&tid[i], NULL, philosopher, (void *)&philo[i]);
 	pthread_create(&stid, NULL, supervisor, (void *)philo);
-	
-	i = -1;
-	while (++i < philo[0].n_philo)
-		pthread_join(tid[i], NULL);
 	pthread_join(stid, NULL);
 	i = -1;
-	while (++i < philo[0].n_philo)
-		pthread_mutex_destroy(&philo[0].forks->forks[i]);
-	
+	while (++i < state.n_philo)
+		pthread_mutex_destroy(&philo[0].state->forks[i]);
+}
+
+void	init_mutex(t_state *state)
+{
+	int	i;
+
+	i = -1;
+	while (++i < state->n_philo)
+		pthread_mutex_init(&state->forks[i], NULL);
+	pthread_mutex_init(&state->print_lock, NULL);
 }
 
 int	main(int len, char **argv)
 {
 	t_philo		*philo;
-	t_forks		forks;
+	t_state		state;
 	int			i;
 
-	philo = malloc(sizeof(t_philo) * 200);
-	if (get_args(len, argv, philo))
+	if (get_args(len, argv, &state))
 		usage();
-	forks.forks = malloc(sizeof(pthread_mutex_t) * philo[0].n_philo);
+	philo = malloc(sizeof(t_philo) * state.n_philo);
+	state.forks = malloc(sizeof(pthread_mutex_t) * state.n_philo);
 	i = -1;
-	while (++i < philo[0].n_philo)
+	state.time = get_timestamp();
+	while (++i < state.n_philo)
 	{
-		if (pthread_mutex_init(&forks.forks[i], NULL) != 0)
-			exit_program("mutex init failed", EXIT_FAILURE);
-		philo[i].forks = &forks;
-	}
-	i = -1;
-	while (++i < philo[0].n_philo)
-	{
-		pthread_mutex_init(&philo[i].lock, NULL);
-		philo[i].time = get_timestamp();
+		philo[i].state = &state;
 		philo[i].id = i;
 	}
-	launch_simulation(philo);
+	init_mutex(&state);
+	launch_simulation(state, philo);
+	free_leaks(philo);
+	system("leaks philo");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/07 13:11:19 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/07 13:21:51 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/09 11:25:56 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 void	free_leaks(t_philo *philo)
 {
-	free(philo[0].forks->forks);
+	free(philo[0].state->forks);
 	free(philo);
 }

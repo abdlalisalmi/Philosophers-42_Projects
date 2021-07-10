@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 14:58:21 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/06/30 09:42:00 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/10 20:47:09 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ long	get_number(const char *str, int i)
 	while (str[i])
 	{
 		if (!(str[i] >= '0' && str[i] <= '9') || i > 10)
-			exit_program("Some Arguments Are Not Integers\n", 1);
+			return (0);
 		result = result * 10;
 		result += (int)str[i] - '0';
 		i++;
@@ -36,9 +36,9 @@ int	ft_atoi(const char *str)
 	result = 0;
 	i = 0;
 	if (!(str[i] >= '0' && str[i] <= '9'))
-		exit_program("Incorrectly Formatted\n", 1);
+		return(0);
 	result = get_number(str, i);
-	if (result > 2147483647)
-		exit_program("Some Arguments Are Bigger Than An Integer\n", 1);
+	if (result > 2147483647 || result == -1)
+		return (0);
 	return (result);
 }

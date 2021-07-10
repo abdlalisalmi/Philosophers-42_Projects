@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:36:17 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/08 13:27:25 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/10 20:26:33 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,7 @@
 # define SLEEPING 3
 # define DEAD 4
 
-typedef struct s_forks
-{
-	pthread_mutex_t		*forks;
-	
-}						t_forks;
-
-typedef struct s_philo
+typedef struct s_state
 {
 	int					n_philo;
 	uint64_t			time;
@@ -46,17 +40,23 @@ typedef struct s_philo
 	uint64_t			t_sleep;
 	int					n_t_eat;
 
+	pthread_mutex_t		*forks;
+	pthread_mutex_t		print_lock;
+}						t_state;
+
+typedef struct s_philo
+{
 	int					id;
 	int					status;
 	int					total_eat;
 	int					last_eat;
 	pthread_mutex_t		lock;
 
-	t_forks				*forks;
+	t_state				*state;
 }						t_philo;
 
 uint64_t	get_timestamp(void);
-int			get_args(int len, char **argv, t_philo *philo);
+int			get_args(int len, char **argv, t_state *state);
 void		my_usleep(uint64_t time);
 void		exit_program(char *msg, int code);
 void		output(long time, t_philo *philo, char *msg, char *color);
