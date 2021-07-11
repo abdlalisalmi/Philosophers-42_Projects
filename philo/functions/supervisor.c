@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 19:42:15 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/11 10:13:01 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/11 18:33:53 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,17 @@ int	max_number_of_eat_check(t_philo *philo)
 	return (0);
 }
 
-void	*supervisor(void *parm)
+int		supervisor(t_philo *philo)
 {
-	t_philo			*philo;
 	int				time;
 	int				i;
 
-	philo = (t_philo *)parm;
 	while (1)
 	{
 		i = -1;
 		while (++i < philo[0].state->n_philo)
 		{
+			printf("%d\n", philo[0].last_eat);
 			time = get_timestamp() - philo[i].state->time;
 			if ((time - philo[i].last_eat) >= (int)philo[i].state->t_die
 				&& philo[i].status != EATING)
@@ -60,11 +59,11 @@ void	*supervisor(void *parm)
 				philo[i].status = DEAD;
 				pthread_mutex_lock(&philo[0].state->print_lock);
 				output(get_timestamp(), &philo[i], "died", RED);
-				return (NULL);
+				return (0);
 			}
 		}
 		if (max_number_of_eat_check(philo))
-			return (NULL);
+			return (0);
 	}
-	return (NULL);
+	return (0);
 }

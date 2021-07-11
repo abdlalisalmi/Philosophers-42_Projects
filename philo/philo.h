@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:36:17 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/11 11:14:12 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/11 18:32:56 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void		output(long time, t_philo *philo, char *msg, char *color);
 int			ft_atoi(const char *str);
 int			ft_strlen(char *str);
 
-void		*supervisor(void *parm);
+int		supervisor(t_philo *philo);
 void		take_forks(t_philo *philo);
 void		start_eating(t_philo *philo);
 void		start_sleeping(t_philo *philo);

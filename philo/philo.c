@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:44:44 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/11 11:01:52 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/11 18:33:33 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*philosopher(void *parm)
 	t_philo		*philo;
 
 	philo = (t_philo *)parm;
-	while (philo->status != DEAD)
+	while (1)
 	{
 		take_forks(philo);
 		start_eating(philo);
@@ -43,7 +43,7 @@ void	launch_simulation(t_state state, t_philo *philo)
 	while (++i < state.n_philo)
 		pthread_create(&philo[i].tid, NULL, philosopher, (void *)&philo[i]);
 	pthread_create(&stid, NULL, supervisor, (void *)philo);
-	pthread_join(stid, NULL);
+	supervisor(philo);
 	i = -1;
 	while (++i < state.n_philo)
 		pthread_mutex_destroy(&philo[0].state->forks[i]);
