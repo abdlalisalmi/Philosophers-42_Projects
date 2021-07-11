@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/29 14:58:21 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/10 20:47:09 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/11 11:08:49 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	ft_atoi(const char *str)
 	result = 0;
 	i = 0;
 	if (!(str[i] >= '0' && str[i] <= '9'))
-		return(0);
+		return (0);
 	result = get_number(str, i);
 	if (result > 2147483647 || result == -1)
 		return (0);

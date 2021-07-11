@@ -6,12 +6,12 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:36:17 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/10 20:26:33 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/11 11:14:12 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PHILOSOPHERS_H
-# define PHILOSOPHERS_H
+#ifndef PHILO_H
+# define PHILO_H
 
 # include <unistd.h>
 # include <stdio.h>
@@ -51,6 +51,7 @@ typedef struct s_philo
 	int					total_eat;
 	int					last_eat;
 	pthread_mutex_t		lock;
+	pthread_t			tid;
 
 	t_state				*state;
 }						t_philo;
@@ -62,7 +63,6 @@ void		exit_program(char *msg, int code);
 void		output(long time, t_philo *philo, char *msg, char *color);
 int			ft_atoi(const char *str);
 int			ft_strlen(char *str);
-void		free_leaks(t_philo *philo);
 
 void		*supervisor(void *parm);
 void		take_forks(t_philo *philo);
@@ -71,4 +71,3 @@ void		start_sleeping(t_philo *philo);
 void		start_thinking(t_philo *philo);
 
 #endif
- 
