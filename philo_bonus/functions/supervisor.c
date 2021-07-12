@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 19:42:15 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/11 18:07:32 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/12 18:51:06 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	max_number_of_eat_check(t_philo *philo)
 				done = 0;
 		if (done)
 		{
-			//pthread_mutex_lock(&philo[0].state->print_lock);
+			// pthread_mutex_lock(&philo[0].state->print_lock);
 			printf ("%sAll philosophers have eaten at least", RED);
 			printf (" %d times each\n", philo[0].state->n_t_eat);
 			i = -1;
@@ -43,30 +43,28 @@ int	max_number_of_eat_check(t_philo *philo)
 
 int	supervisor(t_philo *philo)
 {
-	//int				time;
+	int				time;
 	int				i;
-	(void)philo;
+
 	printf("start Supervisor\n");
 	while (1)
 	{
 		i = -1;
-		//while (++i < philo[0].state->n_philo)
-		//{
-		//	time = get_timestamp() - philo[i].state->time;
-		//	if ((time - philo[i].last_eat) >= (int)philo[i].state->t_die
-		//		&& philo[i].status != EATING)
-		//	{
-		//		philo[i].status = DEAD;
-		//		//pthread_mutex_lock(&philo[0].state->print_lock);
-		//		output(get_timestamp(), &philo[i], "died", RED);
-		//		kill(philo[i].pid, SIGTERM);
-		//		return (1);
-		//	}
-		//}
-		//if (max_number_of_eat_check(philo))
-		//	return (1);
-		sleep(2);
-		printf("%d\n", philo[0].total_eat);
+		while (++i < philo[0].state->n_philo)
+		{
+			time = get_timestamp() - philo[i].state->time;
+			if ((time - philo[i].last_eat) >= (int)philo[i].state->t_die
+				&& philo[i].status != EATING)
+			{
+				philo[i].status = DEAD;
+				// pthread_mutex_lock(&philo[0].state->print_lock);
+				output(get_timestamp(), &philo[i], "died", RED);
+				kill(philo[i].pid, SIGTERM);
+				return (1);
+			}
+		}
+		if (max_number_of_eat_check(philo))
+			return (1);
 	}
 	return (1);
 }

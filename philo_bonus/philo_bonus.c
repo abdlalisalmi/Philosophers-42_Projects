@@ -6,25 +6,36 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:44:44 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/11 18:08:34 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/12 18:57:30 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo_bonus.h"
 
+void	*routine(void *parm)
+{
+	t_philo		*philo;
+
+	philo = (t_philo *)parm;
+	while (1)
+	{
+		// printf("Philosppher %d\n", philo->total_eat);
+		// philo->total_eat += 1;
+		// sleep(3);
+		take_forks(philo);
+		start_eating(philo);
+		start_sleeping(philo);
+		start_thinking(philo);
+	}
+	return (NULL);
+}
+
 void	philosopher(t_philo *philo)
 {
-	while (philo->status != DEAD)
-	{
-		printf("Philosppher %d\n", philo->id);
-		philo->total_eat += 1;
-		sleep(3);
-		//take_forks(philo);
-		//start_eating(philo);
-		//start_sleeping(philo);
-		//start_thinking(philo);
-	}
-	//return (NULL);
+	pthread_create(&philo->tid, NULL, routine, (void *)philo);
+	pthread_join(philo->tid, NULL);
+	// pthread_create(&philo.stid, NULL, supervisor, (void *)philo);
+	// pthread_join(philo.stid, NULL);
 }
 
 int	launch_simulation(t_state state, t_philo *philo)
@@ -71,6 +82,8 @@ int	main(int len, char **argv)
 		{
 			philo[i].state = &state;
 			philo[i].id = i;
+			philo[i].last_eat = 0;
+			philo[i].total_eat = 0;
 		}
 		launch_simulation(state, philo);
 	}

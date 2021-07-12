@@ -6,7 +6,7 @@
 #    By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/06/26 11:36:20 by aes-salm          #+#    #+#              #
-#    Updated: 2021/07/11 18:10:19 by aes-salm         ###   ########.fr        #
+#    Updated: 2021/07/12 18:52:20 by aes-salm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,10 @@ FLAGS	=	-Wall -Wextra -Werror
 SRCS	=	functions/get_args.c\
 			functions/ft_atoi.c\
 			functions/get_timestamp.c\
+			functions/routine.c\
 			functions/supervisor.c\
 			functions/output.c\
+			functions/my_usleep.c\
 
 
 
