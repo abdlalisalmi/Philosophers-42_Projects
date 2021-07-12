@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:36:17 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/12 15:44:34 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/12 21:24:08 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_philo
 	int					status;
 	int					total_eat;
 	int					last_eat;
-	pthread_mutex_t		lock;
+	pthread_mutex_t		eat_lock;
 	pthread_t			tid;
 
 	t_state				*state;

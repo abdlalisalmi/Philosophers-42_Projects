@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 12:32:07 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/12 16:20:08 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/12 21:36:50 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void	start_eating(t_philo *philo)
 	right = (philo->id + 1) % philo->state->n_philo;
 	left = philo->id;
 	philo->status = EATING;
+	pthread_mutex_lock(&philo[0].eat_lock);
 	pthread_mutex_lock(&philo[0].state->print_lock);
 	output(get_timestamp(), philo, "is eating", GREEN);
 	pthread_mutex_unlock(&philo[0].state->print_lock);
@@ -60,6 +61,7 @@ void	start_eating(t_philo *philo)
 	philo->last_eat = get_timestamp() - philo->state->time;
 	pthread_mutex_unlock(&philo->state->forks[right]);
 	pthread_mutex_unlock(&philo->state->forks[left]);
+	pthread_mutex_unlock(&philo[0].eat_lock);
 }
 
 void	start_sleeping(t_philo *philo)
