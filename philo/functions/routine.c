@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 12:32:07 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/11 18:29:02 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/12 16:10:35 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	start_eating(t_philo *philo)
 {
 	int	right;
 	int	left;
-
 	right = (philo->id + 1) % philo->state->n_philo;
 	left = philo->id;
 	philo->status = EATING;

@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/26 11:44:44 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/11 18:33:33 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/12 16:15:28 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	launch_simulation(t_state state, t_philo *philo)
 	while (++i < state.n_philo)
 		pthread_create(&philo[i].tid, NULL, philosopher, (void *)&philo[i]);
 	pthread_create(&stid, NULL, supervisor, (void *)philo);
-	supervisor(philo);
+	pthread_join(stid, NULL);
 	i = -1;
 	while (++i < state.n_philo)
 		pthread_mutex_destroy(&philo[0].state->forks[i]);
@@ -77,6 +77,8 @@ int	main(int len, char **argv)
 		{
 			philo[i].state = &state;
 			philo[i].id = i;
+			philo[i].last_eat = 0;
+			philo[i].total_eat = 0;
 		}
 		init_mutex(&state);
 		launch_simulation(state, philo);
