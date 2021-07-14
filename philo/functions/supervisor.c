@@ -6,7 +6,7 @@
 /*   By: aes-salm <aes-salm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/05 19:42:15 by aes-salm          #+#    #+#             */
-/*   Updated: 2021/07/12 21:26:34 by aes-salm         ###   ########.fr       */
+/*   Updated: 2021/07/14 11:46:24 by aes-salm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	*supervisor(void *parm)
 				&& philo[i].status != EATING)
 			{
 				pthread_mutex_lock(&philo[0].state->print_lock);
-				pthread_mutex_lock(&philo[0].eat_lock);
+				pthread_mutex_lock(&philo[i].eat_lock);
 				output(get_timestamp(), &philo[i], "died", RED);
 				return (NULL);
 			}
